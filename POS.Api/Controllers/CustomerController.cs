@@ -7,12 +7,12 @@ using POS.Api.Utilities;
 namespace POS.Api.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Employee")]
+    [Route("api/Customer")]
     [EnableCors(Utility.CORE_POLICY)]
-    public class EmployeeController : Controller
+    public class CustomerController : Controller
     {
-        IEmployeeRepository _Repository;
-        public EmployeeController(IEmployeeRepository repository)
+        ICustomerRepository _Repository;
+        public CustomerController(ICustomerRepository repository)
         {
             _Repository = repository;
         }
@@ -31,15 +31,15 @@ namespace POS.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetEmployee(int id)
+        public IActionResult GetCustomer(int id)
         {
             try
             {
-                Employee EmployeeToReturn = _Repository.GetById(id);
+                Customer customerToReturn = _Repository.GetById(id);
 
-                if (EmployeeToReturn != null)
+                if (customerToReturn != null)
                 {
-                    return Ok(EmployeeToReturn);
+                    return Ok(customerToReturn);
                 }
 
                 return NotFound();
@@ -52,11 +52,11 @@ namespace POS.Api.Controllers
         }
 
         [HttpPost()]
-        public IActionResult Insert([FromBody] Employee employee)
+        public IActionResult Insert([FromBody] Customer customer)
         {
             try
             {
-                var newEmployee = _Repository.insert(employee);
+                var newEmployee = _Repository.insert(customer);
                 return Ok(newEmployee);
             }
             catch
@@ -66,12 +66,12 @@ namespace POS.Api.Controllers
         }
 
         [HttpPut()]
-        public IActionResult Update([FromBody] Employee employee)
+        public IActionResult Update([FromBody] Customer customer)
         {
             try
             {
-                var updatedStudent = _Repository.update(employee);
-                return Ok(updatedStudent);
+                var updatedCustomer = _Repository.update(customer);
+                return Ok(updatedCustomer);
             }
             catch
             {
@@ -87,7 +87,7 @@ namespace POS.Api.Controllers
             {
                 if (_Repository.Delete(id))
                 {
-                    return Ok("Record archived successfull.");
+                    return Ok("Record archived successfully.");
                 }
                 return NotFound();
 
