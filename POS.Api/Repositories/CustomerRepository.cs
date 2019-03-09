@@ -83,6 +83,33 @@ namespace POS.Api.Repositories
             return GetById(Convert.ToInt32(id));
         }
 
+        public ICollection<Customer> Search(string firstName, string surName, string postcode)
+        {
+            string query = "select * from customers where FirstName like '" + firstName + "%' or surName like '" + surName + "%' or postcode like '" + postcode + "%'";
+            Console.WriteLine(query);
+            SqlDataAdapter da = new SqlDataAdapter(query, constring);
+            var dt = new DataTable();
+            da.Fill(dt);
+
+            List<Customer> lst = new List<Customer>();
+            foreach (DataRow row in dt.Rows)
+            {
+                lst.Add(new Customer()
+                {
+                    Id = Convert.ToInt16(row["customerId"]),
+                    FirstName = row["FirstName"].ToString(),
+                    SurName = row["SurName"].ToString(),
+                    Phone = row["phone"].ToString(),
+                    Email = row["email"].ToString(),
+                    Address = row["Address"].ToString(),
+                    Town = row["town"].ToString(),
+                    Postcode = row["Postcode"].ToString(),
+                });
+            }
+
+            return lst;
+        }
+
         public Customer update(Customer t)
         {
             string query = $"update Customers set ";

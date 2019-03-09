@@ -8,5 +8,6 @@ namespace POS.Api.Repositories.Interfaces
 {
     public interface ICustomerRepository : IRepository<Customer>
     {
+        ICollection<Customer> Search(string firstName, string surName, string postcode);
     }
 }

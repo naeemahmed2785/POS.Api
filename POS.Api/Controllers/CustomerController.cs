@@ -17,6 +17,19 @@ namespace POS.Api.Controllers
             _Repository = repository;
         }
 
+        [HttpGet("{firstname}/{surname}/{postcode}")]
+        public IActionResult Search(string firstname, string surname, string postcode)
+        {
+            try
+            {
+                return Ok(_Repository.Search(firstname, surname, postcode));
+            }
+            catch (System.Exception ex)
+            {
+                throw new System.Exception(ex.Message);
+            }
+        }
+
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -26,7 +39,7 @@ namespace POS.Api.Controllers
             }
             catch (System.Exception ex)
             {
-                return NotFound(ex.Message);
+                throw new System.Exception(ex.Message);
             }
         }
 
@@ -45,9 +58,9 @@ namespace POS.Api.Controllers
                 return NotFound();
 
             }
-            catch
+            catch(System.Exception ex)
             {
-                return NoContent();
+                throw new System.Exception(ex.Message);
             }
         }
 
@@ -59,9 +72,9 @@ namespace POS.Api.Controllers
                 var newEmployee = _Repository.insert(customer);
                 return Ok(newEmployee);
             }
-            catch
+            catch (System.Exception ex)
             {
-                return NoContent();
+                throw new System.Exception(ex.Message);
             }
         }
 
@@ -73,9 +86,9 @@ namespace POS.Api.Controllers
                 var updatedCustomer = _Repository.update(customer);
                 return Ok(updatedCustomer);
             }
-            catch
+            catch (System.Exception ex)
             {
-                return NoContent();
+                throw new System.Exception(ex.Message);
             }
         }
 
@@ -92,9 +105,9 @@ namespace POS.Api.Controllers
                 return NotFound();
 
             }
-            catch
+            catch (System.Exception ex)
             {
-                return NoContent();
+                throw new System.Exception(ex.Message);
             }
         }
 
